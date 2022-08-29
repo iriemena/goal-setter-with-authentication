@@ -1,0 +1,16 @@
+a {
+text-decoration: none !important;
+color: rgb(77, 66, 66) !important;
+}
+.reg-align, .login-align{
+    margin-top: 1.5rem;
+    display: grid;
+    place-content: center;
+    text-align: center;
+}
+.spinner{
+    height: 100vh;
+    margin-left: auto;
+    display: grid;
+    place-content: center;
+}

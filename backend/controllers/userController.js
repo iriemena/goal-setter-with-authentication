@@ -58,7 +58,7 @@ const loginUser = asyncHandler(async (req, res) => {
       email,
       // token: generateToken(user._id),
       token: jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "10m",
+        expiresIn: "90d",
       }),
     });
   } else {

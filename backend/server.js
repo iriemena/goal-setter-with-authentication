@@ -3,6 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const color = require("colors");
 const path = require("path");
+const cors = require("cors");
 // const {errorHandler} = require('./middleware/errorMiddleware')
 const dotenv = require("dotenv").config({
   path: join(__dirname, "..", ".env"),
@@ -11,6 +12,7 @@ const connectDB = require("../backend/config/db");
 const port = process.env.PORT || 8000;
 const app = express();
 
+app.use(cors());
 connectDB();
 
 // body parser
@@ -20,6 +22,19 @@ app.use(express.urlencoded({ extended: false }));
 // router
 app.use("/api/goal", require("./routes/goalRoute"));
 app.use("/api/user", require("./routes/userRoute"));
+
+// Serve frontend
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, "../", "frontend", "build", "index.html")
+    )
+  );
+} else {
+  app.get("/", (req, res) => res.send("Please set to production"));
+}
 
 app.use(morgan("dev"));
 
